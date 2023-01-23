@@ -7,6 +7,10 @@ from color_letters import col_correct_let_bck, col_correct_pos_frn, col_correct_
 word = namedtuple('word', ['first', 'second', 'third', 'fourth', 'fifth', 'whole', 'correct'])
 letter = namedtuple('letter', ['letter', 'correct_position', 'in_final_word', 'foreground_col', 'background_col'])
 
+alphabet_in_str: str = 'abcdefghijklmnopqrstuvwxyz'
+alphabet = namedtuple('alphabet', ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'])
+alphabet_letter = namedtuple('alphabet_letter', ['status'])
+
 
 def word_in_vocab(word: str, vocab: list[str]) -> bool:
     if word in vocab:
@@ -51,3 +55,22 @@ def construct_word(word_to_guess: str, guessed_word: str, word_length: int) -> w
                     whole=guessed_word, correct=guessed_word == word_to_guess)
 
     return word_tup
+
+
+def generate_empty_alphabet(alphabet_str: str = alphabet_in_str) -> alphabet:
+    kwargs = {char: alphabet_letter(status='not_guessed') for char in alphabet_str}
+    empty_alphabet = alphabet(**kwargs)
+
+    return empty_alphabet
+
+
+def construct_alphabet(current_alpha: alphabet, guessed_word: word, alphabet_str: str = alphabet_in_str) -> alphabet:
+    letters = {}
+
+    for letter in alphabet_str:
+        letter_indexes = [i for i, char in enumerate(guessed_word.whole) if letter == char]
+        print(letter, letter_indexes)
+
+    # new_alpha: alphabet = alphabet(**letters)
+    #
+    # return new_alpha
